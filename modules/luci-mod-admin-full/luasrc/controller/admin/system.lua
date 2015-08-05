@@ -13,14 +13,6 @@ function index()
 
 	entry({"admin", "system", "admin"}, cbi("admin_system/admin"), _("Administration"), 2)
 
-	if fs.access("/bin/opkg") then
-		entry({"admin", "system", "packages"}, call("action_packages"), _("Software"), 10)
-		entry({"admin", "system", "packages", "ipkg"}, form("admin_system/ipkg"))
-	end
-
-	entry({"admin", "system", "startup"}, form("admin_system/startup"), _("Startup"), 45)
-	entry({"admin", "system", "crontab"}, form("admin_system/crontab"), _("Scheduled Tasks"), 46)
-
 	if fs.access("/sbin/block") then
 		entry({"admin", "system", "fstab"}, cbi("admin_system/fstab"), _("Mount Points"), 50)
 		entry({"admin", "system", "fstab", "mount"}, cbi("admin_system/fstab/mount"), nil).leaf = true
@@ -306,7 +298,7 @@ function action_passwd()
 
 	if p1 or p2 then
 		if p1 == p2 then
-			stat = luci.sys.user.setpasswd("root", p1)
+			stat = luci.sys.user.setpasswd("admin", p1)
 		else
 			stat = 10
 		end
